@@ -56,7 +56,7 @@ export default function Sidebar() {
                 className="flex flex-col min-w-0"
               >
                 <span className="font-serif text-lg font-bold tracking-tight text-[#f8f5ee] leading-tight">
-                  StockVision<span className="text-[#d4ba8a]">.AI</span>
+                  Stock Bull<span className="text-[#d4ba8a]">.ai</span>
                 </span>
                 <span className="font-mono text-[9px] tracking-widest text-[#cbbaa0]/80 uppercase">
                   Institutional Capital

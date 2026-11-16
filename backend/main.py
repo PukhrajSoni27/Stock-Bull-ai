@@ -1,5 +1,5 @@
 """
-StockVision AI — FastAPI ML service.
+Stock Bull.ai — FastAPI ML service.
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from ml.predictor import predict_close
 
-app = FastAPI(title="StockVision AI API", version="1.0.0")
+app = FastAPI(title="Stock Bull.ai API", version="1.0.0")
 
 _origins = os.getenv(
     "CORS_ORIGINS",
@@ -58,7 +58,7 @@ class PredictResponse(BaseModel):
 
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "service": "StockVision AI"}
+    return {"status": "ok", "service": "Stock Bull.ai"}
 
 
 @app.post("/api/predict", response_model=PredictResponse)

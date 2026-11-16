@@ -56,7 +56,7 @@ export default function Landing() {
           </div>
           <div className="flex flex-col">
             <span className="font-serif text-2xl font-bold tracking-tight text-[#f8f5ee]">
-              StockVision<span className="text-[#d4ba8a]">.AI</span>
+              Stock Bull<span className="text-[#d4ba8a]">.ai</span>
             </span>
             <span className="font-mono text-[9px] uppercase tracking-widest text-[#cbbaa0]/80">
               Institutional Predictive Analytics
@@ -266,7 +266,7 @@ export default function Landing() {
                   Ready to deploy high-conviction market analysis?
                 </h3>
                 <p className="mt-4 text-sm md:text-base text-[#cbbaa0] leading-relaxed">
-                  Join institutional analysts and discerning private investors utilizing StockVision AI 
+                  Join institutional analysts and discerning private investors utilizing Stock Bull.ai 
                   to eliminate noise and forecast daily equity closing values with empirical clarity.
                 </p>
               </div>
@@ -300,7 +300,7 @@ export default function Landing() {
                 <TrendingUp className="size-4" />
               </div>
               <span className="font-serif text-lg font-bold text-[#f8f5ee]">
-                StockVision<span className="text-[#d4ba8a]">.AI</span>
+                Stock Bull<span className="text-[#d4ba8a]">.ai</span>
               </span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-8 text-xs font-mono uppercase tracking-wider text-[#cbbaa0]/80">
@@ -313,7 +313,7 @@ export default function Landing() {
 
           <div className="mt-8 space-y-4 text-center">
             <p className="font-mono text-[11px] uppercase tracking-widest text-[#cbbaa0]/60">
-              © 2026 StockVision AI Intelligence Systems. Built for PBL Quantitative Research.
+              © 2026 Stock Bull.ai Intelligence Systems. Built for PBL Quantitative Research.
             </p>
             <p className="text-[11px] leading-relaxed text-[#cbbaa0]/60 max-w-3xl mx-auto">
               Regulatory Disclosure: Machine learning projections are generated via historical market regression models 

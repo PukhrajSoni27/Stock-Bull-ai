@@ -63,7 +63,7 @@ export default function History() {
         r.prediction > r.open ? 'Bullish' : 'Bearish'
       ])
     ].map(row => row.join(',')).join('\n')
-    
+
     const blob = new Blob([csv], { type: 'text/csv' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
@@ -97,7 +97,7 @@ export default function History() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <button 
+          <button
             onClick={handleExport}
             disabled={rows.length === 0}
             className="flex items-center gap-2 rounded-xl border border-[#d4ba8a]/35 bg-[#172415] px-4 py-2.5 text-xs font-mono font-bold uppercase tracking-wider text-[#d4ba8a] hover:bg-[#20311c] hover:border-[#d4ba8a]/60 transition-all disabled:opacity-40"
@@ -109,8 +109,8 @@ export default function History() {
       </div>
 
       {/* Main Table Container */}
-      <motion.div 
-        variants={item} 
+      <motion.div
+        variants={item}
         className="overflow-hidden rounded-2xl border border-[#d4ba8a]/25 bg-[#141f12]/90 shadow-[0_12px_36px_rgba(8,14,7,0.4)] backdrop-blur-md"
       >
         <div className="overflow-x-auto">
@@ -164,8 +164,8 @@ export default function History() {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2.5">
                         <div className="h-1.5 w-16 overflow-hidden rounded-full bg-[#24351f]">
-                          <div 
-                            className="h-full bg-gradient-to-r from-[#5f8653] to-[#d4ba8a]" 
+                          <div
+                            className="h-full bg-gradient-to-r from-[#5f8653] to-[#d4ba8a]"
                             style={{ width: `${Number(r.confidence) * 100}%` }}
                           />
                         </div>
@@ -175,24 +175,23 @@ export default function History() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                       <span className={`inline-flex rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${
-                         r.prediction > r.open 
-                          ? 'border-[#81a876]/40 bg-[#81a876]/10 text-[#81a876]' 
-                          : 'border-[#f87171]/40 bg-[#f87171]/10 text-[#f87171]'
-                       }`}>
-                         {r.prediction > r.open ? '▲ Bullish Bias' : '▼ Bearish Bias'}
-                       </span>
+                      <span className={`inline-flex rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${r.prediction > r.open
+                        ? 'border-[#81a876]/40 bg-[#81a876]/10 text-[#81a876]'
+                        : 'border-[#f87171]/40 bg-[#f87171]/10 text-[#f87171]'
+                        }`}>
+                        {r.prediction > r.open ? '▲ Bullish Bias' : '▼ Bearish Bias'}
+                      </span>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex justify-end gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
-                        <button 
+                        <button
                           className="p-1.5 rounded-lg text-[#cbbaa0] hover:text-[#d4ba8a] hover:bg-[#24351f] transition-all"
                           title="Audit on Yahoo Finance"
                           onClick={() => window.open(`https://finance.yahoo.com/quote/${r.symbol}`, '_blank')}
                         >
                           <ExternalLink className="size-3.5" />
                         </button>
-                        <button 
+                        <button
                           className="p-1.5 rounded-lg text-[#cbbaa0] hover:text-[#f87171] hover:bg-[#381c1c]/40 transition-all"
                           title="Purge record"
                           onClick={() => handleDelete(r.id)}

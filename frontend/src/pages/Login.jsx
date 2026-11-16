@@ -41,6 +41,18 @@ export default function Login() {
     navigate(from, { replace: true })
   }
 
+  async function handleDemoLogin() {
+    setSubmitting(true)
+    const res = await login('demo.investor@stockbull.ai', 'demo1234')
+    setSubmitting(false)
+    if (!res.ok) {
+      push(res.error, 'error')
+      return
+    }
+    push('Authenticated as Demo Client.', 'success')
+    navigate(from, { replace: true })
+  }
+
   return (
     <div className="flex min-h-screen bg-[#0d140b] text-[#f4efe6]">
       {/* Editorial Brand Showcase Left Panel */}
@@ -56,7 +68,7 @@ export default function Login() {
             </div>
             <div>
               <span className="font-serif text-2xl font-bold tracking-tight text-[#f8f5ee]">
-                StockVision<span className="text-[#d4ba8a]">.AI</span>
+                Stock Bull<span className="text-[#d4ba8a]">.ai</span>
               </span>
               <p className="font-mono text-[9px] uppercase tracking-widest text-[#cbbaa0]/80">
                 Institutional Quant Workspace
@@ -172,6 +184,15 @@ export default function Login() {
               >
                 {submitting ? <RefreshCw className="size-4 animate-spin text-[#141d11]" /> : <LogIn className="size-4" />}
                 {submitting ? 'Verifying Credentials...' : 'Authenticate & Enter Terminal'}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleDemoLogin}
+                disabled={submitting}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#d4ba8a]/35 bg-[#172516] py-3 text-xs font-mono font-bold uppercase tracking-wider text-[#d4ba8a] hover:bg-[#20321e] hover:border-[#d4ba8a]/60 active:scale-95 disabled:opacity-50 transition-all"
+              >
+                <span>Instant Demo Client Access</span>
               </button>
             </form>
 

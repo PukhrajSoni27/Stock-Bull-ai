@@ -59,7 +59,7 @@ export default function Signup() {
             </div>
             <div>
               <span className="font-serif text-2xl font-bold tracking-tight text-[#f8f5ee]">
-                StockVision<span className="text-[#d4ba8a]">.AI</span>
+                Stock Bull<span className="text-[#d4ba8a]">.ai</span>
               </span>
               <p className="font-mono text-[9px] uppercase tracking-widest text-[#cbbaa0]/80">
                 Institutional Quant Workspace
@@ -121,7 +121,7 @@ export default function Signup() {
                 Client Registration
               </div>
               <h1 className="font-serif text-3xl font-bold text-[#f8f5ee]">Create Account</h1>
-              <p className="mt-1.5 text-xs text-[#cbbaa0]">Initialize your StockVision AI terminal credentials.</p>
+              <p className="mt-1.5 text-xs text-[#cbbaa0]">Initialize your Stock Bull.ai terminal credentials.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">

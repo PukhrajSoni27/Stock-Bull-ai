@@ -1,1 +1,1 @@
-# StockVision AI ML package
+# Stock Bull.ai ML package

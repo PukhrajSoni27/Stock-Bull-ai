@@ -1,1 +1,1 @@
-# StockVision AI utilities
+# Stock Bull.ai utilities

@@ -1,17 +1,17 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  Search, 
-  Zap, 
-  Info, 
-  TrendingUp, 
-  AlertCircle, 
-  RefreshCw, 
-  BarChart3, 
-  Clock, 
-  CheckCircle2, 
-  Cpu, 
-  Layers, 
+import {
+  Search,
+  Zap,
+  Info,
+  TrendingUp,
+  AlertCircle,
+  RefreshCw,
+  BarChart3,
+  Clock,
+  CheckCircle2,
+  Cpu,
+  Layers,
   ShieldCheck,
   DollarSign
 } from 'lucide-react'
@@ -144,8 +144,8 @@ export default function Predict() {
                   { sym: 'RELIANCE.NS', desc: 'NSE India' },
                   { sym: 'MSFT', desc: 'NASDAQ US' },
                 ].map(({ sym, desc }) => (
-                  <button 
-                    key={sym} 
+                  <button
+                    key={sym}
                     type="button"
                     onClick={() => {
                       setSymbol(sym)
@@ -266,7 +266,7 @@ export default function Predict() {
                       </span>
                     </div>
                     <div className="mt-2 h-1.5 w-full rounded-full bg-[#23351f] overflow-hidden">
-                      <motion.div 
+                      <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${Number(result.confidence) * 100}%` }}
                         transition={{ duration: 0.8, delay: 0.2 }}
