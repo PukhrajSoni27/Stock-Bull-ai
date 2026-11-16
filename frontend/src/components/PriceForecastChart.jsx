@@ -1,9 +1,8 @@
 import {
   CartesianGrid,
   ComposedChart,
-  Legend,
-  Line,
   Area,
+  Line,
   ReferenceDot,
   ResponsiveContainer,
   Tooltip,
@@ -15,56 +14,58 @@ import { formatInr, formatInrShort } from '../services/formatInr'
 export default function PriceForecastChart({ chartSeries, asOf, sameDayOpen, predictedClose, dark }) {
   if (!chartSeries?.length) return null
 
-  const axisStroke = dark ? '#334155' : '#e2e8f0'
-  const gridStroke = dark ? '#1e293b' : '#f1f5f9'
-  const tickFill = dark ? '#94a3b8' : '#64748b'
-  const lineClose = dark ? '#6366f1' : '#4f46e5'
-  const openDot = '#f59e0b'
-  const predDot = '#3b82f6'
+  const axisStroke = '#3a5432'
+  const gridStroke = '#1c2918'
+  const tickFill = '#cbbaa0'
+  const lineClose = '#81a876'
+  const openDot = '#d4ba8a'
+  const predDot = '#a7c59d'
 
   return (
-    <div className="relative h-[400px] w-full min-w-0">
+    <div className="relative h-[400px] w-full min-w-0 font-mono">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart data={chartSeries} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="colorClose" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={lineClose} stopOpacity={0.3} />
-              <stop offset="95%" stopColor={lineClose} stopOpacity={0} />
+              <stop offset="5%" stopColor="#5f8653" stopOpacity={0.35} />
+              <stop offset="95%" stopColor="#141f12" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor={lineClose} />
-              <stop offset="100%" stopColor="#3b82f6" />
+              <stop offset="0%" stopColor="#81a876" />
+              <stop offset="70%" stopColor="#a7c59d" />
+              <stop offset="100%" stopColor="#d4ba8a" />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} vertical={false} />
           <XAxis
             dataKey="date"
-            tick={{ fill: tickFill, fontSize: 11, fontWeight: 500 }}
+            tick={{ fill: tickFill, fontSize: 10, fontWeight: 500 }}
             tickLine={false}
-            axisLine={false}
+            axisLine={{ stroke: '#2b3f26' }}
             interval="preserveStartEnd"
             minTickGap={60}
           />
           <YAxis
             domain={['auto', 'auto']}
-            tick={{ fill: tickFill, fontSize: 11, fontWeight: 500 }}
+            tick={{ fill: tickFill, fontSize: 10, fontWeight: 500 }}
             tickLine={false}
             axisLine={false}
             tickFormatter={(v) => formatInrShort(v)}
-            width={70}
+            width={72}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: dark ? '#0f172a' : '#fff',
-              border: `1px solid ${dark ? '#1e293b' : '#e2e8f0'}`,
-              borderRadius: '16px',
+              backgroundColor: '#121c10',
+              border: '1px solid rgba(212, 186, 138, 0.3)',
+              borderRadius: '12px',
               padding: '12px 16px',
-              fontSize: '12px',
-              boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+              fontSize: '11px',
+              boxShadow: '0 16px 32px rgba(8, 14, 7, 0.6)',
+              fontFamily: 'JetBrains Mono, monospace',
             }}
-            itemStyle={{ fontWeight: 600, color: dark ? '#f1f5f9' : '#1e293b' }}
-            labelStyle={{ color: dark ? '#94a3b8' : '#64748b', marginBottom: '4px', fontWeight: 600 }}
-            cursor={{ stroke: axisStroke, strokeWidth: 2 }}
+            itemStyle={{ fontWeight: 600, color: '#f8f5ee' }}
+            labelStyle={{ color: '#d4ba8a', marginBottom: '4px', fontWeight: 600 }}
+            cursor={{ stroke: axisStroke, strokeWidth: 1.5, strokeDasharray: '4 4' }}
             formatter={(value) => [formatInr(value), 'Price']}
           />
           <Area
@@ -78,16 +79,16 @@ export default function PriceForecastChart({ chartSeries, asOf, sameDayOpen, pre
             type="monotone"
             dataKey="close"
             stroke="url(#lineGradient)"
-            strokeWidth={3}
+            strokeWidth={2.5}
             dot={false}
-            activeDot={{ r: 6, stroke: dark ? '#0f172a' : '#fff', strokeWidth: 2 }}
+            activeDot={{ r: 5, stroke: '#d4ba8a', strokeWidth: 2, fill: '#141f12' }}
           />
           <ReferenceDot
             x={asOf}
             y={sameDayOpen}
             r={6}
             fill={openDot}
-            stroke={dark ? '#0f172a' : '#fff'}
+            stroke="#141f12"
             strokeWidth={2}
             isFront
           />
@@ -96,13 +97,28 @@ export default function PriceForecastChart({ chartSeries, asOf, sameDayOpen, pre
             y={predictedClose}
             r={6}
             fill={predDot}
-            stroke={dark ? '#0f172a' : '#fff'}
+            stroke="#141f12"
             strokeWidth={2}
             isFront
           />
         </ComposedChart>
       </ResponsiveContainer>
+
+      {/* Legend Indicators */}
+      <div className="mt-2 flex items-center justify-center gap-6 text-[10px] font-mono text-[#cbbaa0]">
+        <div className="flex items-center gap-1.5">
+          <span className="size-2 rounded-full bg-[#81a876]" />
+          <span>Historical Trajectory</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="size-2 rounded-full bg-[#d4ba8a]" />
+          <span>Open Valuation Dot</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="size-2 rounded-full bg-[#a7c59d]" />
+          <span>XGBoost Projected Close</span>
+        </div>
+      </div>
     </div>
   )
 }
-

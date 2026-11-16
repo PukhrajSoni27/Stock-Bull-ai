@@ -9,6 +9,8 @@ frontend/dist/
 __pycache__/
 *.py[cod]
 .venv/
+.venv*/
+backend/.venv*/
 venv/
 *.egg-info/
 .pytest_cache/

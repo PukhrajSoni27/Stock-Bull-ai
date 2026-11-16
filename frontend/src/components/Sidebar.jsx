@@ -8,7 +8,9 @@ import {
   LogOut, 
   User,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Shield,
+  Layers
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { useState } from 'react'
@@ -19,65 +21,85 @@ export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   const navItems = [
-    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { label: 'Predict', path: '/predict', icon: Search },
-    { label: 'History', path: '/history', icon: History },
+    { label: 'Executive Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { label: 'Predictive Intelligence', path: '/predict', icon: Search },
+    { label: 'Audit & History', path: '/history', icon: History },
   ]
 
   return (
     <motion.div
-      animate={{ width: isCollapsed ? 88 : 280 }}
-      className="relative flex h-screen flex-col border-r border-slate-200 bg-white/50 backdrop-blur-xl transition-colors dark:border-slate-800 dark:bg-slate-900/50"
+      animate={{ width: isCollapsed ? 84 : 290 }}
+      transition={{ duration: 0.25, ease: 'easeInOut' }}
+      className="relative z-30 flex h-screen flex-col border-r border-[#d4ba8a]/20 bg-[#10170e]/95 backdrop-blur-2xl text-[#f4efe6]"
     >
       {/* Collapse Toggle */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -right-3 top-12 z-50 flex size-6 items-center justify-center rounded-full border border-slate-200 bg-white shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800"
+        className="absolute -right-3.5 top-12 z-50 flex size-7 items-center justify-center rounded-full border border-[#d4ba8a]/30 bg-[#1c2719] text-[#d4ba8a] shadow-lg hover:bg-[#253623] hover:text-[#f8f5ee] transition-all"
+        title={isCollapsed ? 'Expand navigation' : 'Collapse navigation'}
       >
-        {isCollapsed ? <ChevronRight className="size-3" /> : <ChevronLeft className="size-3" />}
+        {isCollapsed ? <ChevronRight className="size-3.5" /> : <ChevronLeft className="size-3.5" />}
       </button>
 
-      <div className="flex h-20 items-center justify-center border-b border-slate-100 dark:border-slate-800">
-        <div className="flex items-center gap-3 overflow-hidden">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-lg shadow-indigo-600/20">
-            <TrendingUp className="size-6" />
+      {/* Brand Header */}
+      <div className="flex h-20 items-center px-5 border-b border-[#d4ba8a]/15 bg-[#141e12]/60">
+        <Link to="/" className="flex items-center gap-3.5 overflow-hidden group">
+          <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#4a6c40] via-[#2c3f26] to-[#192516] border border-[#d4ba8a]/40 text-[#f8f5ee] shadow-[0_4px_16px_rgba(44,63,38,0.4)] transition-transform group-hover:scale-105">
+            <TrendingUp className="size-5 text-[#d4ba8a]" />
           </div>
           <AnimatePresence>
             {!isCollapsed && (
-              <motion.span
-                initial={{ opacity: 0, x: -10 }}
+              <motion.div
+                initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
-                className="font-display text-xl font-bold text-slate-900 dark:text-white"
+                exit={{ opacity: 0, x: -8 }}
+                className="flex flex-col min-w-0"
               >
-                StockVision
-              </motion.span>
+                <span className="font-serif text-lg font-bold tracking-tight text-[#f8f5ee] leading-tight">
+                  StockVision<span className="text-[#d4ba8a]">.AI</span>
+                </span>
+                <span className="font-mono text-[9px] tracking-widest text-[#cbbaa0]/80 uppercase">
+                  Institutional Capital
+                </span>
+              </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </Link>
       </div>
 
-      <nav className="flex-1 space-y-2 p-4 pt-10">
+      {/* Navigation Links */}
+      <nav className="flex-1 space-y-1.5 p-3.5 pt-7">
+        <div className="px-3 pb-2">
+          {!isCollapsed && (
+            <p className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#cbbaa0]/60">
+              Terminal Suite
+            </p>
+          )}
+        </div>
         {navItems.map((item) => {
           const active = location.pathname === item.path
           return (
             <Link
               key={item.path}
               to={item.path}
-              className={`group relative flex items-center gap-4 rounded-xl px-4 py-3.5 transition-all ${
+              className={`group relative flex items-center gap-3.5 rounded-xl px-3.5 py-3 transition-all ${
                 active
-                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
-                  : 'text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800'
+                  ? 'bg-gradient-to-r from-[#2a3c25] to-[#1f2d1b] text-[#f8f5ee] border border-[#d4ba8a]/35 shadow-[0_4px_20px_rgba(20,30,18,0.6)]'
+                  : 'text-[#cbbaa0] hover:bg-[#1a2617]/70 hover:text-[#f8f5ee] border border-transparent'
               }`}
             >
-              <item.icon className={`size-5 transition-transform group-hover:scale-110 ${active ? 'text-white' : ''}`} />
+              <item.icon
+                className={`size-5 shrink-0 transition-transform group-hover:scale-110 ${
+                  active ? 'text-[#d4ba8a]' : 'text-[#a7c59d] group-hover:text-[#d4ba8a]'
+                }`}
+              />
               <AnimatePresence>
                 {!isCollapsed && (
                   <motion.span
-                    initial={{ opacity: 0, x: -10 }}
+                    initial={{ opacity: 0, x: -6 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
-                    className="text-sm font-bold ml-4"
+                    exit={{ opacity: 0, x: -6 }}
+                    className="text-xs font-semibold tracking-wide truncate"
                   >
                     {item.label}
                   </motion.span>
@@ -85,8 +107,8 @@ export default function Sidebar() {
               </AnimatePresence>
               {active && (
                 <motion.div
-                  layoutId="active-pill"
-                  className="absolute left-[-4px] top-1/2 h-8 w-1 -translate-y-1/2 rounded-full bg-white"
+                  layoutId="active-indicator"
+                  className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-[#d4ba8a]"
                 />
               )}
             </Link>
@@ -94,25 +116,35 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="space-y-4 border-t border-slate-100 p-4 dark:border-slate-800">
-
-        <div className={`flex items-center gap-4 rounded-2xl bg-slate-50 p-4 dark:bg-slate-800/50 ${isCollapsed ? 'justify-center p-2' : ''}`}>
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white shadow-sm dark:bg-slate-700">
-            <User className="size-5 text-slate-600 dark:text-slate-300" />
+      {/* User & Security Footer */}
+      <div className="space-y-3 border-t border-[#d4ba8a]/15 p-3.5 bg-[#141e12]/60">
+        <div
+          className={`flex items-center gap-3 rounded-xl border border-[#d4ba8a]/20 bg-[#1c2919]/60 p-3 ${
+            isCollapsed ? 'justify-center p-2' : ''
+          }`}
+        >
+          <div className="relative flex size-9 shrink-0 items-center justify-center rounded-lg bg-[#2b3d26] border border-[#d4ba8a]/30 text-[#d4ba8a]">
+            <User className="size-4" />
+            <span className="absolute -bottom-0.5 -right-0.5 size-2.5 rounded-full bg-[#81a876] border-2 border-[#10170e]" />
           </div>
           {!isCollapsed && (
-            <div className="min-w-0 flex-1 ml-4">
-              <p className="truncate text-sm font-bold text-slate-900 dark:text-white">{user?.name}</p>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-xs font-bold text-[#f8f5ee]">
+                {user?.name || 'Verified Trader'}
+              </p>
+              <p className="truncate font-mono text-[10px] text-[#cbbaa0]">
+                {user?.email || 'Authenticated'}
+              </p>
             </div>
           )}
         </div>
 
         <button
           onClick={logout}
-          className="flex w-full items-center gap-4 rounded-xl px-4 py-3 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30"
+          className="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-[#cbbaa0] hover:text-[#f87171] hover:bg-[#2b1b1b]/40 border border-transparent hover:border-[#f87171]/20 transition-all"
         >
-          <LogOut className="size-5" />
-          {!isCollapsed && <span className="text-sm font-bold ml-4">Sign out</span>}
+          <LogOut className="size-4 shrink-0" />
+          {!isCollapsed && <span>End Session</span>}
         </button>
       </div>
     </motion.div>

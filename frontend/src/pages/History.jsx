@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { History as HistoryIcon, Download, Trash2, ExternalLink } from 'lucide-react'
+import { History as HistoryIcon, Download, Trash2, ExternalLink, ShieldCheck, FileSpreadsheet } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { formatStoredField } from '../services/formatInr'
 import { deletePrediction, subscribePredictions } from '../services/predictions'
@@ -10,14 +10,14 @@ const container = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.05
+      staggerChildren: 0.04
     }
   }
 }
 
 const item = {
-  hidden: { opacity: 0, x: -10 },
-  show: { opacity: 1, x: 0 }
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0 }
 }
 
 function formatDate(iso) {
@@ -42,12 +42,12 @@ export default function History() {
 
   const handleDelete = async (id) => {
     if (!user?.uid) return
-    if (!window.confirm('Are you sure you want to delete this prediction?')) return
+    if (!window.confirm('Confirm deletion of this audited forecast entry?')) return
     try {
       await deletePrediction(user.uid, id)
     } catch (error) {
       console.error('Failed to delete prediction:', error)
-      alert('Failed to delete prediction. Please try again.')
+      alert('Failed to delete record. Please retry.')
     }
   }
 
@@ -68,7 +68,7 @@ export default function History() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `stockvision-history-${new Date().toISOString().split('T')[0]}.csv`
+    a.download = `stockvision-institutional-audit-${new Date().toISOString().split('T')[0]}.csv`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -80,47 +80,64 @@ export default function History() {
       variants={container}
       initial="hidden"
       animate="show"
-      className="mx-auto max-w-7xl space-y-8"
+      className="space-y-8"
     >
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* Header Bar */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#d4ba8a]/15 pb-6">
         <div>
-          <h1 className="font-display text-3xl font-bold text-slate-900 dark:text-white">Forecasting History</h1>
-          <p className="mt-1 text-slate-500 dark:text-slate-400">
-            A comprehensive log of all your AI-driven market predictions.
+          <div className="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-[#d4ba8a] mb-1">
+            <span className="size-1.5 rounded-full bg-[#81a876]" />
+            IMMUTABLE AUDIT LOG
+          </div>
+          <h1 className="font-serif text-3xl md:text-4xl font-bold text-[#f8f5ee]">
+            Quantitative Execution Ledger
+          </h1>
+          <p className="mt-1 text-xs text-[#cbbaa0]">
+            Comprehensive verified archive of all XGBoost forecasts generated under your client session.
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3">
           <button 
             onClick={handleExport}
-            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 transition-all"
+            disabled={rows.length === 0}
+            className="flex items-center gap-2 rounded-xl border border-[#d4ba8a]/35 bg-[#172415] px-4 py-2.5 text-xs font-mono font-bold uppercase tracking-wider text-[#d4ba8a] hover:bg-[#20311c] hover:border-[#d4ba8a]/60 transition-all disabled:opacity-40"
           >
-            <Download className="size-4" />
-            Export CSV
+            <Download className="size-3.5" />
+            <span>Export Audit CSV</span>
           </button>
         </div>
       </div>
 
-      <motion.div variants={item} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      {/* Main Table Container */}
+      <motion.div 
+        variants={item} 
+        className="overflow-hidden rounded-2xl border border-[#d4ba8a]/25 bg-[#141f12]/90 shadow-[0_12px_36px_rgba(8,14,7,0.4)] backdrop-blur-md"
+      >
         <div className="overflow-x-auto">
-          <table className="w-full min-w-full text-left text-sm">
+          <table className="w-full min-w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-slate-100 bg-slate-50/50 text-xs font-bold uppercase tracking-wider text-slate-500 dark:border-slate-800 dark:bg-slate-900/50">
-                <th className="px-6 py-4">Timestamp</th>
-                <th className="px-6 py-4">Symbol</th>
-                <th className="px-6 py-4">Open Price</th>
-                <th className="px-6 py-4">Predicted Close</th>
-                <th className="px-6 py-4">Confidence</th>
-                <th className="px-6 py-4">Trend</th>
-                <th className="px-6 py-4 text-right">Actions</th>
+              <tr className="border-b border-[#d4ba8a]/20 bg-[#172415]/90 text-[10px] uppercase tracking-wider text-[#cbbaa0]">
+                <th className="px-6 py-4">Timestamp (IST)</th>
+                <th className="px-6 py-4">Security</th>
+                <th className="px-6 py-4">Open Valuation</th>
+                <th className="px-6 py-4">Projected Close</th>
+                <th className="px-6 py-4">Holdout Confidence</th>
+                <th className="px-6 py-4">Alpha Regime</th>
+                <th className="px-6 py-4 text-right">Verification</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody className="divide-y divide-[#d4ba8a]/10">
               {rows.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="px-6 py-20 text-center">
                     <div className="flex flex-col items-center">
-                      <HistoryIcon className="size-12 text-slate-200 dark:text-slate-800 mb-4" />
-                      <p className="text-sm font-medium text-slate-500">No history found</p>
+                      <div className="mb-4 rounded-2xl bg-[#1b2b18] border border-[#d4ba8a]/20 p-5 shadow-inner">
+                        <HistoryIcon className="size-8 text-[#cbbaa0]" />
+                      </div>
+                      <p className="font-serif text-lg font-bold text-[#f8f5ee]">No Ledger Entries Recorded</p>
+                      <p className="mt-1 text-xs text-[#cbbaa0] max-w-xs font-sans">
+                        Any forecasts generated in the prediction terminal will automatically be archived here.
+                      </p>
                     </div>
                   </td>
                 </tr>
@@ -129,55 +146,58 @@ export default function History() {
                   <motion.tr
                     key={r.id}
                     variants={item}
-                    className="group transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                    className="group transition-colors hover:bg-[#1c2c19]/70"
                   >
-                    <td className="whitespace-nowrap px-6 py-4 text-slate-500 dark:text-slate-400">
+                    <td className="whitespace-nowrap px-6 py-4 text-[#cbbaa0]">
                       {formatDate(r.timestamp)}
                     </td>
-                    <td className="px-6 py-4 font-bold text-slate-900 dark:text-white">
-                      {r.symbol}
+                    <td className="px-6 py-4 font-bold text-[#f8f5ee] flex items-center gap-2">
+                      <span className="size-2 rounded-full bg-[#81a876]" />
+                      <span className="text-sm">{r.symbol}</span>
                     </td>
-                    <td className="px-6 py-4 tabular-nums text-slate-600 dark:text-slate-400">
+                    <td className="px-6 py-4 tabular-nums text-[#cbbaa0]">
                       {formatStoredField(r, 'open')}
                     </td>
-                    <td className="px-6 py-4 font-bold tabular-nums text-indigo-600 dark:text-indigo-400">
+                    <td className="px-6 py-4 font-bold tabular-nums text-[#d4ba8a] text-sm">
                       {formatStoredField(r, 'prediction')}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
-                        <div className="h-1.5 w-16 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+                      <div className="flex items-center gap-2.5">
+                        <div className="h-1.5 w-16 overflow-hidden rounded-full bg-[#24351f]">
                           <div 
-                            className="h-full bg-indigo-500" 
+                            className="h-full bg-gradient-to-r from-[#5f8653] to-[#d4ba8a]" 
                             style={{ width: `${Number(r.confidence) * 100}%` }}
                           />
                         </div>
-                        <span className="text-[11px] font-bold">{(Number(r.confidence) * 100).toFixed(1)}%</span>
+                        <span className="text-[11px] font-bold text-[#f8f5ee]">
+                          {(Number(r.confidence) * 100).toFixed(1)}%
+                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                       <span className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                       <span className={`inline-flex rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${
                          r.prediction > r.open 
-                          ? 'bg-emerald-500/10 text-emerald-600' 
-                          : 'bg-rose-500/10 text-rose-600'
+                          ? 'border-[#81a876]/40 bg-[#81a876]/10 text-[#81a876]' 
+                          : 'border-[#f87171]/40 bg-[#f87171]/10 text-[#f87171]'
                        }`}>
-                         {r.prediction > r.open ? 'Bullish' : 'Bearish'}
+                         {r.prediction > r.open ? '▲ Bullish Bias' : '▼ Bearish Bias'}
                        </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="flex justify-end gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
                         <button 
-                          className="p-2 text-slate-400 hover:text-indigo-600 transition-colors"
-                          title="View on Yahoo Finance"
+                          className="p-1.5 rounded-lg text-[#cbbaa0] hover:text-[#d4ba8a] hover:bg-[#24351f] transition-all"
+                          title="Audit on Yahoo Finance"
                           onClick={() => window.open(`https://finance.yahoo.com/quote/${r.symbol}`, '_blank')}
                         >
-                          <ExternalLink className="size-4" />
+                          <ExternalLink className="size-3.5" />
                         </button>
                         <button 
-                          className="p-2 text-slate-400 hover:text-rose-600 transition-colors"
-                          title="Delete prediction"
+                          className="p-1.5 rounded-lg text-[#cbbaa0] hover:text-[#f87171] hover:bg-[#381c1c]/40 transition-all"
+                          title="Purge record"
                           onClick={() => handleDelete(r.id)}
                         >
-                          <Trash2 className="size-4" />
+                          <Trash2 className="size-3.5" />
                         </button>
                       </div>
                     </td>
@@ -191,4 +211,3 @@ export default function History() {
     </motion.div>
   )
 }
-

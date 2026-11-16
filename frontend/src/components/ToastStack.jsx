@@ -1,9 +1,9 @@
 import { useToast } from '../context/ToastContext'
 
 const styles = {
-  info: 'bg-slate-800 text-white shadow-slate-900/20 dark:bg-slate-100 dark:text-slate-900',
-  success: 'bg-gradient-to-r from-indigo-600 to-emerald-600 text-white shadow-lg shadow-indigo-600/25',
-  error: 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-lg shadow-rose-600/20',
+  info: 'border border-[#d4ba8a]/30 bg-[#162214] text-[#f8f5ee] shadow-[0_10px_25px_rgba(8,14,7,0.7)]',
+  success: 'border border-[#81a876]/40 bg-[#1b2b18] text-[#f8f5ee] shadow-[0_10px_25px_rgba(30,48,26,0.7)]',
+  error: 'border border-[#f87171]/40 bg-[#291717] text-[#fca5a5] shadow-[0_10px_25px_rgba(40,15,15,0.7)]',
 }
 
 export default function ToastStack() {
@@ -12,15 +12,18 @@ export default function ToastStack() {
 
   return (
     <div
-      className="pointer-events-none fixed bottom-6 right-6 z-[100] flex max-w-sm flex-col gap-2"
+      className="pointer-events-none fixed bottom-6 right-6 z-[100] flex max-w-sm flex-col gap-2 font-mono"
       aria-live="polite"
     >
       {toasts.map((t) => (
         <div
           key={t.id}
-          className={`pointer-events-auto rounded-xl px-4 py-3 text-sm font-medium shadow-lg transition duration-300 ${styles[t.variant] || styles.info}`}
+          className={`pointer-events-auto rounded-xl px-4 py-3 text-xs font-medium shadow-xl backdrop-blur-md transition-all duration-300 ${styles[t.variant] || styles.info}`}
         >
-          {t.message}
+          <div className="flex items-center gap-2">
+            <span className={`size-1.5 rounded-full ${t.variant === 'error' ? 'bg-[#f87171]' : 'bg-[#d4ba8a]'}`} />
+            <span>{t.message}</span>
+          </div>
         </div>
       ))}
     </div>

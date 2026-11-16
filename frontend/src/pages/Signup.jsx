@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowLeft, TrendingUp, Mail, Lock, User, UserPlus, RefreshCw } from 'lucide-react'
+import { ArrowLeft, TrendingUp, Mail, Lock, User, UserPlus, RefreshCw, ShieldCheck, CheckCircle2 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
 
@@ -18,7 +18,7 @@ export default function Signup() {
   async function handleSubmit(e) {
     e.preventDefault()
     if (password.length < 6) {
-      push('Password must be at least 6 characters.', 'error')
+      push('Security policy requires at least 6 characters.', 'error')
       return
     }
     setSubmitting(true)
@@ -28,7 +28,7 @@ export default function Signup() {
       push(res.error, 'error')
       return
     }
-    push('Account created. You are signed in.', 'success')
+    push('Client account initialized. Terminal access granted.', 'success')
     navigate('/dashboard', { replace: true })
   }
 
@@ -40,141 +40,189 @@ export default function Signup() {
       push(res.error, 'error')
       return
     }
-    push('Signed in with Google.', 'success')
+    push('Authenticated with Google credential.', 'success')
     navigate('/dashboard', { replace: true })
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
-      <div className="relative hidden w-[45%] lg:flex flex-col justify-between overflow-hidden bg-slate-900 p-12 text-white">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/20 via-slate-900 to-slate-900" />
-          <div className="absolute -left-20 -top-20 size-96 rounded-full bg-emerald-500/10 blur-[100px]" />
-          <div className="absolute -right-20 -bottom-20 size-96 rounded-full bg-indigo-500/5 blur-[100px]" />
-        </div>
+    <div className="flex min-h-screen bg-[#0d140b] text-[#f4efe6]">
+      {/* Brand Showcase Left Panel */}
+      <div className="relative hidden w-[45%] lg:flex flex-col justify-between overflow-hidden bg-[#121c10] p-14 border-r border-[#d4ba8a]/20">
+        <div className="absolute inset-0 z-0 bg-subtle-grid opacity-60" />
+        <div className="pointer-events-none absolute -left-20 -top-20 size-96 rounded-full bg-[#5f8653]/15 blur-[120px]" />
+        <div className="pointer-events-none absolute -right-20 -bottom-20 size-96 rounded-full bg-[#d4ba8a]/10 blur-[120px]" />
 
         <div className="relative z-10">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="flex size-10 items-center justify-center rounded-xl bg-indigo-500 text-white shadow-lg">
-              <TrendingUp className="size-6" />
+          <Link to="/" className="flex items-center gap-3.5 group">
+            <div className="flex size-11 items-center justify-center rounded-xl bg-[#24351f] border border-[#d4ba8a]/40 text-[#d4ba8a] shadow-[0_4px_16px_rgba(20,30,18,0.5)]">
+              <TrendingUp className="size-5" />
             </div>
-            <span className="font-display text-2xl font-bold">StockVision <span className="text-indigo-400">AI</span></span>
+            <div>
+              <span className="font-serif text-2xl font-bold tracking-tight text-[#f8f5ee]">
+                StockVision<span className="text-[#d4ba8a]">.AI</span>
+              </span>
+              <p className="font-mono text-[9px] uppercase tracking-widest text-[#cbbaa0]/80">
+                Institutional Quant Workspace
+              </p>
+            </div>
           </Link>
           
-          <div className="mt-20 max-w-md">
-            <h2 className="text-4xl font-bold leading-tight">Start your journey to smarter investing.</h2>
-            <p className="mt-6 text-lg text-slate-400">
-               Join a community of data-driven investors. Your account and saved runs are backed by Firebase.
+          <div className="mt-24 max-w-md">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#d4ba8a]/25 bg-[#1a2717] px-3.5 py-1 text-[11px] font-mono text-[#d4ba8a] mb-6">
+              <ShieldCheck className="size-3.5 text-[#81a876]" />
+              INSTITUTIONAL ENROLLMENT
+            </div>
+            <h2 className="font-serif text-4xl font-bold leading-tight text-[#f8f5ee]">
+              Equip your capital with empirical conviction.
+            </h2>
+            <p className="mt-6 text-sm leading-relaxed text-[#cbbaa0]">
+              Establish an institutional workspace. All prediction audit trails, holdout confidence scores, 
+              and multi-currency simulations are securely managed for your profile.
             </p>
+
+            <div className="mt-8 space-y-3 font-mono text-xs text-[#cbbaa0]">
+              <div className="flex items-center gap-2.5">
+                <CheckCircle2 className="size-4 text-[#81a876]" />
+                <span>Deterministic XGBoost closing models</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <CheckCircle2 className="size-4 text-[#81a876]" />
+                <span>NSE / BSE Indian equities in native INR</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <CheckCircle2 className="size-4 text-[#81a876]" />
+                <span>Historical audit logging & CSV exports</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="relative z-10 flex items-center justify-between border-t border-white/10 pt-8">
-           <p className="text-sm text-slate-500">Built for PBL project excellence.</p>
-           <p className="text-sm text-slate-500">v1.2.0</p>
+        <div className="relative z-10 flex items-center justify-between border-t border-[#d4ba8a]/15 pt-8 text-xs font-mono text-[#cbbaa0]/70">
+          <span>PBL RESEARCH PLATFORM</span>
+          <span>EST. 2026</span>
         </div>
       </div>
 
-      <div className="flex flex-1 items-center justify-center px-6">
+      {/* Signup Form Right Panel */}
+      <div className="flex flex-1 items-center justify-center px-6 py-12 relative">
+        <div className="pointer-events-none absolute bottom-1/4 left-1/4 size-72 rounded-full bg-[#5f8653]/10 blur-[100px]" />
+        
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-md"
+          transition={{ duration: 0.4 }}
+          className="w-full max-w-md relative z-10"
         >
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Create account</h1>
-            <p className="mt-2 text-slate-500">Join StockVision AI and start predicting today.</p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <button
-              type="button"
-              onClick={handleGoogleSignup}
-              disabled={submitting}
-              className="flex w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white py-3.5 text-sm font-bold text-slate-700 transition-all hover:bg-slate-50 active:scale-95 disabled:opacity-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
-            >
-              <span className="text-base">G</span>
-              {submitting ? 'Please wait...' : 'Continue with Google'}
-            </button>
-
-            <div className="relative py-2">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-200 dark:border-slate-800" />
+          {/* Card Container */}
+          <div className="rounded-3xl border border-[#d4ba8a]/25 bg-[#141e12]/85 p-8 md:p-10 shadow-[0_20px_60px_rgba(8,13,7,0.6)] backdrop-blur-xl">
+            <div className="mb-8">
+              <div className="inline-flex items-center gap-1.5 text-xs font-mono text-[#d4ba8a] uppercase tracking-wider mb-2">
+                <UserPlus className="size-3.5 text-[#81a876]" />
+                Client Registration
               </div>
-              <div className="relative flex justify-center text-xs font-bold uppercase tracking-wider text-slate-400">
-                <span className="bg-slate-50 px-3 dark:bg-slate-950">Or create with email</span>
-              </div>
+              <h1 className="font-serif text-3xl font-bold text-[#f8f5ee]">Create Account</h1>
+              <p className="mt-1.5 text-xs text-[#cbbaa0]">Initialize your StockVision AI terminal credentials.</p>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Full Name</label>
-              <div className="relative">
-                <User className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white py-3 pr-4 pl-11 text-sm font-medium text-slate-900 outline-none transition-all focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-800 dark:bg-slate-900 dark:text-white"
-                  placeholder="John Doe"
-                />
-              </div>
-            </div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <button
+                type="button"
+                onClick={handleGoogleSignup}
+                disabled={submitting}
+                className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#d4ba8a]/30 bg-[#1c2819] py-3 text-xs font-bold uppercase tracking-wider text-[#f8f5ee] transition-all hover:bg-[#253622] hover:border-[#d4ba8a]/60 active:scale-95 disabled:opacity-50 shadow-sm"
+              >
+                <span className="flex size-5 items-center justify-center rounded-full bg-[#f8f5ee] text-[#141d11] font-bold text-xs">
+                  G
+                </span>
+                {submitting ? 'Connecting...' : 'Continue with Google'}
+              </button>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Email Address</label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white py-3 pr-4 pl-11 text-sm font-medium text-slate-900 outline-none transition-all focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-800 dark:bg-slate-900 dark:text-white"
-                  placeholder="name@example.com"
-                />
+              <div className="relative py-1">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-[#d4ba8a]/15" />
+                </div>
+                <div className="relative flex justify-center text-[10px] font-mono font-bold uppercase tracking-widest text-[#cbbaa0]/60">
+                  <span className="bg-[#141e12] px-3">or create with email</span>
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Password</label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white py-3 pr-4 pl-11 text-sm font-medium text-slate-900 outline-none transition-all focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-800 dark:bg-slate-900 dark:text-white"
-                  placeholder="At least 6 characters"
-                />
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#cbbaa0]">
+                  Full Name / Entity
+                </label>
+                <div className="relative">
+                  <User className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-[#cbbaa0]" />
+                  <input
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full rounded-xl border border-[#d4ba8a]/25 bg-[#0e160c] py-3 pl-11 pr-4 text-xs font-medium text-[#f8f5ee] placeholder-[#cbbaa0]/40 outline-none transition-all focus:border-[#d4ba8a] focus:ring-2 focus:ring-[#d4ba8a]/20"
+                    placeholder="e.g. Warren Hastings"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="pt-2">
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#cbbaa0]">
+                  Official Email
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-[#cbbaa0]" />
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full rounded-xl border border-[#d4ba8a]/25 bg-[#0e160c] py-3 pl-11 pr-4 text-xs font-medium text-[#f8f5ee] placeholder-[#cbbaa0]/40 outline-none transition-all focus:border-[#d4ba8a] focus:ring-2 focus:ring-[#d4ba8a]/20"
+                    placeholder="analyst@fund.com"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#cbbaa0]">
+                  Security Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-[#cbbaa0]" />
+                  <input
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full rounded-xl border border-[#d4ba8a]/25 bg-[#0e160c] py-3 pl-11 pr-4 text-xs font-medium text-[#f8f5ee] placeholder-[#cbbaa0]/40 outline-none transition-all focus:border-[#d4ba8a] focus:ring-2 focus:ring-[#d4ba8a]/20"
+                    placeholder="Minimum 6 characters"
+                  />
+                </div>
+              </div>
+
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition-all hover:bg-indigo-700 active:scale-95 disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#d4ba8a] via-[#e2cca6] to-[#c1a36f] py-3.5 text-xs font-bold uppercase tracking-wider text-[#141d11] shadow-[0_8px_24px_rgba(212,186,138,0.25)] transition-all hover:brightness-105 active:scale-95 disabled:opacity-50 mt-2"
               >
-                {submitting ? <RefreshCw className="size-4 animate-spin" /> : <UserPlus className="size-4" />}
-                {submitting ? 'Creating account...' : 'Create account'}
+                {submitting ? <RefreshCw className="size-4 animate-spin text-[#141d11]" /> : <UserPlus className="size-4" />}
+                {submitting ? 'Creating Profile...' : 'Complete Registration'}
               </button>
+            </form>
+
+            <div className="mt-6 pt-6 border-t border-[#d4ba8a]/15 text-center">
+              <p className="text-xs text-[#cbbaa0]">
+                Already have credentials?{' '}
+                <Link to="/login" className="font-semibold text-[#d4ba8a] hover:text-[#f8f5ee] transition-colors underline decoration-[#d4ba8a]/40">
+                  Client sign in
+                </Link>
+              </p>
             </div>
-          </form>
+          </div>
 
-          <p className="mt-8 text-center text-sm text-slate-500">
-            Already have an account?{' '}
-            <Link to="/login" className="font-bold text-indigo-600 hover:text-indigo-700">Sign in instead</Link>
-          </p>
-
-          <Link to="/" className="mt-8 flex items-center justify-center gap-2 text-xs font-bold text-slate-400 hover:text-slate-600 transition-colors">
-            <ArrowLeft className="size-3" />
-            Back to landing page
+          <Link to="/" className="mt-8 flex items-center justify-center gap-2 text-xs font-mono text-[#cbbaa0]/70 hover:text-[#f8f5ee] transition-colors">
+            <ArrowLeft className="size-3.5" />
+            <span>Return to Public Intelligence</span>
           </Link>
         </motion.div>
       </div>
     </div>
   )
 }
-
