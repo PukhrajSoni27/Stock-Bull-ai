@@ -1,4 +1,4 @@
-# Stock Bull.ai
+# Grow More.ai
 
 **Stock Bull.ai** is a sophisticated full-stack institutional equity intelligence web application that leverages machine learning to forecast same-day stock closing prices. The system synthesizes real-time Yahoo Finance data, 12+ macro technical indicators, fundamental metrics, and advanced regression models (XGBoost with scikit-learn Gradient Boosting fallback) to deliver institutional-grade market predictions.
 
